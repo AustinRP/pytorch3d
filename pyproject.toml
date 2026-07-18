@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=64", "wheel", "torch>=2.1,<2.5"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pytorch3d"
+version = "0.7.9"
+description = "FAIR's library of reusable components for deep learning with 3D data."
+readme = "README.md"
+requires-python = ">=3.8,<3.13"
+license = { file = "LICENSE" }
+authors = [{ name = "FAIR" }]
+dependencies = [
+    "iopath",
+    "torch>=2.1,<2.5",
+]
+
+[project.optional-dependencies]
+all = ["matplotlib", "tqdm>4.29.0", "imageio", "ipywidgets"]
+dev = ["black", "flake8", "flake8-bugbear", "flake8-comprehensions", "usort"]
+implicitron = [
+    "hydra-core>=1.1",
+    "visdom",
+    "lpips",
+    "tqdm>4.29.0",
+    "matplotlib",
+    "accelerate",
+    "sqlalchemy>=2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/facebookresearch/pytorch3d"
+
+[project.scripts]
+pytorch3d_implicitron_runner = "pytorch3d.implicitron_trainer.experiment:experiment"
+pytorch3d_implicitron_visualizer = "pytorch3d.implicitron_trainer.visualize_reconstruction:main"
+
+[tool.uv]
+default-groups = ["dev"]
+
+# visdom's legacy setup.py imports pkg_resources without declaring setuptools
+# as a build dependency.
+[tool.uv.extra-build-dependencies]
+visdom = ["setuptools<81"]
+
+[dependency-groups]
+dev = [
+    "black",
+    "flake8",
+    "flake8-bugbear",
+    "flake8-comprehensions",
+    "pytest",
+    "usort",
+]

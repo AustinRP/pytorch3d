@@ -3,6 +3,27 @@
 
 ## Requirements
 
+### Using uv
+
+From a local checkout, create and activate a virtual environment, then install
+the package and development tools with:
+
+```
+uv sync
+source .venv/bin/activate
+```
+
+The default `dev` group installs the formatters, linters, and test runner. To
+install optional tutorial and Implicitron dependencies as well, use:
+
+```
+uv sync --extra all --extra implicitron
+```
+
+Builds use the PyTorch version declared in `pyproject.toml` and compile the
+PyTorch3D extension for the available CPU/GPU toolchain. For older CUDA
+toolchains, set `CUB_HOME` before running `uv sync`.
+
 ### Core library
 
 The core library is written in PyTorch. Several components have underlying implementation in CUDA for improved performance. A subset of these components have CPU implementations in C++/PyTorch. It is advised to use PyTorch3D with GPU support in order to use all the features.

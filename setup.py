@@ -50,6 +50,10 @@ def get_extensions():
     extension = CppExtension
 
     extra_compile_args = {"cxx": ["-std=c++17"]}
+    # Recent Apple Clang versions diagnose a specialization in PyTorch's
+    # headers as an error, although it is accepted by the supported toolchains.
+    if sys.platform == "darwin":
+        extra_compile_args["cxx"].append("-Wno-error=invalid-specialization")
     define_macros = []
     include_dirs = [extensions_dir]
 
